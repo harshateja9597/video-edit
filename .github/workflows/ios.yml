@@ -33,3 +33,9 @@ jobs:
           gem install cocoapods 
           pod install
           cd ..
+
+      # Build the .xcarchive
+      - name: List available schemes
+        run: |
+          cd ios
+          xcodebuild -workspace VideoEdit.xcworkspace -list
