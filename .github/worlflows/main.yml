@@ -16,7 +16,7 @@ jobs:
 
       # set up node.js environment 
       - name: setup node.js
-        uses: sctiopns/setup-node@v4
+        uses: actions/setup-node@v4
         with: 
           node-version: 18 #mentioned in package.json under engine section
 
@@ -27,7 +27,7 @@ jobs:
       # install cocoapods dependencies
       - name: install cocoapods dependencies
         run: |
-          cd iOS
+          cd ios
           gem install cocoapods 
           pod install
           cd ..
