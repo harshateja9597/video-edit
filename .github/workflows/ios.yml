@@ -39,3 +39,12 @@ jobs:
         run: |
           cd ios
           xcodebuild -workspace VideoEdit.xcworkspace -list
+
+      - name: Verify shared schemes
+        run: |
+          cd ios
+          ls VideoEdit.xcodeproj/xcshareddata/xcschemes
+          
+      - name: Clean Derived Data
+        run: |
+          rm -rf ~/Library/Developer/Xcode/DerivedData/*
