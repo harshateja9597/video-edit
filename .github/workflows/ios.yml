@@ -44,7 +44,11 @@ jobs:
         run: |
           cd ios
           ls VideoEdit.xcodeproj/xcshareddata/xcschemes
-          
+
       - name: Clean Derived Data
         run: |
           rm -rf ~/Library/Developer/Xcode/DerivedData/*
+
+      - name: finding out xcode version
+        run: |
+          cat ios/podfile.lock | grep -i xcode
