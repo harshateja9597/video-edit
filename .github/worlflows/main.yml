@@ -5,9 +5,29 @@ on:
     branches:
       - main
 jobs:
-  build: 
-    runs-on: ubuntu-latest
+  build:
+    name: Build and archive iOS App
+    runs-on: macos-15 #found this VideoEdit/ios/VideoEdit.xcodeproj/project.pbxproj(IPHONEOS_DEPLOYMENT_TARGET = 15.1;)
+    timeout-minutes: 10
 
     steps: 
       - name: checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      # set up node.js environment 
+      - name: setup node.js
+        uses: sctiopns/setup-node@v4
+        with: 
+          node-version: 18 #mentioned in package.json under engine section
+
+      # install node.js dependencies
+      - name: install node.js dependencies
+        run: npm install --force
+
+      # install cocoapods dependencies
+      - name: install cocoapods dependencies
+        run: |
+          cd iOS
+          gem install cocoapods 
+          pod install
+          cd ..
