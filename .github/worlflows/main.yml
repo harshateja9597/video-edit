@@ -4,28 +4,29 @@ on:
   push:
     branches:
       - main
+
 jobs:
   build:
     name: Build and archive iOS App
-    runs-on: macos-15 #found this VideoEdit/ios/VideoEdit.xcodeproj/project.pbxproj(IPHONEOS_DEPLOYMENT_TARGET = 15.1;)
+    runs-on: macos-15 # Found in VideoEdit/ios/VideoEdit.xcodeproj/project.pbxproj (IPHONEOS_DEPLOYMENT_TARGET = 15.1;)
     timeout-minutes: 10
 
     steps: 
-      - name: checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # set up node.js environment 
-      - name: setup node.js
+      # Set up Node.js environment 
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with: 
-          node-version: 18 #mentioned in package.json under engine section
+          node-version: 18 # Mentioned in package.json under engines section
 
-      # install node.js dependencies
-      - name: install node.js dependencies
+      # Install Node.js dependencies
+      - name: Install Node.js dependencies
         run: npm install --force
 
-      # install cocoapods dependencies
-      - name: install cocoapods dependencies
+      # Install CocoaPods dependencies
+      - name: Install CocoaPods dependencies
         run: |
           cd ios
           gem install cocoapods 
