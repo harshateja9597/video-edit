@@ -52,3 +52,5 @@ jobs:
       - name: finding out xcode version
         run: |
           cat ios/podfile.lock | grep -i xcode
+          cat ios/VideoEdit.xcodeproj/project.pbxproj | grep XCODE
+          cat ios/Gemfile | grep xcode
