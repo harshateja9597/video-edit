@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
       
 
 jobs:
@@ -41,6 +40,18 @@ jobs:
       # Install Android dependencies (Gradle, SDK)
       - name: Install Gradle Dependencies
         run: cd android && ./gradlew dependencies
+
+      # Verify All Dependencies Installed
+      - name: Verify Installed Dependencies
+        run: cd android && ./gradlew dependencies --info
+      
+      # run code quality checks (deket for kotlin)
+      - name: run code quality check
+        run: cd android && ./gradlew detekt
+
+      # run linting
+      - name: run android lint
+        run: cd android && ./gradlew lint
 
       # Build APK
       - name: Build APK (Release)
