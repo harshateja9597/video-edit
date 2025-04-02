@@ -34,6 +34,10 @@ jobs:
       - name: Install Node.js dependencies
         run: npm install --force
 
+      # giving execute permissions to the file
+      - name: Grant execute permission to Gradle wrapper
+        run: chmod +x android/gradlew
+
       # Install Android dependencies (Gradle, SDK)
       - name: Install Gradle Dependencies
         run: cd android && ./gradlew dependencies
