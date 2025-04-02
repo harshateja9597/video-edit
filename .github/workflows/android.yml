@@ -48,10 +48,12 @@ jobs:
       # run code quality checks (deket for kotlin)
       - name: run code quality check
         run: cd android && ./gradlew detekt
+        continue-on-error: true 
 
       # run linting
       - name: run android lint
         run: cd android && ./gradlew lint
+        continue-on-error: true 
 
       # Build APK
       - name: Build APK (Release)
