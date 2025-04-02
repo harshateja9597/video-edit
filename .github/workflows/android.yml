@@ -1,0 +1,63 @@
+name: Build Android App
+
+on:
+  push:
+    branches:
+      
+
+jobs:
+  build:
+    name: Build and Package Android App
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Java (required for Gradle)
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'  # Temurin JDK
+          java-version: '17'  # Recommended for Android builds
+
+      # Set up Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18 # Ensure compatibility with package.json
+
+      # Install dependencies
+      - name: Install Node.js dependencies
+        run: npm install --force
+
+      # Install Android dependencies (Gradle, SDK)
+      - name: Install Gradle Dependencies
+        run: cd android && ./gradlew dependencies
+
+      # Build APK
+      - name: Build APK (Release)
+        run: |
+          cd android
+          ./gradlew assembleRelease
+
+      # Upload APK as an artifact
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: android/app/build/outputs/apk/release/app-release.apk
+
+      # Build AAB (Android App Bundle)
+      - name: Build AAB (Release)
+        run: |
+          cd android
+          ./gradlew bundleRelease
+
+      # Upload AAB as an artifact
+      - name: Upload AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-aab
+          path: android/app/build/outputs/bundle/release/app-release.aab
