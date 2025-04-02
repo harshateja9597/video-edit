@@ -3,7 +3,7 @@ name: Build React Native App
 on:
   push:
     branches:
-    #  - main
+      - maater
   workflow_dispatch:  # Enables manual trigger
 
 jobs:
