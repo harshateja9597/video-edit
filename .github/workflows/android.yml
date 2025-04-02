@@ -3,6 +3,7 @@ name: Build Android App
 on:
   push:
     branches:
+      - main
       
 
 jobs:
@@ -15,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Set up Java (required for Gradle)
+      # Set up Java (required for Gradle) - gradel version 8+ requires java 17
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
