@@ -41,7 +41,7 @@ jobs:
       
       # run linting
       - name: run lint
-        run: npm lint
+        run: npm run lint
         continue-on-error: true 
 
       # Run Unit Tests (Jest)
