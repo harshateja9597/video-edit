@@ -40,8 +40,8 @@ jobs:
         run: cd android && ./gradlew dependencies
       
       # run linting
-      - name: run android lint
-        run: cd android && ./gradlew lint
+      - name: run lint
+        run: npm lint
         continue-on-error: true 
 
       # Run Unit Tests (Jest)
