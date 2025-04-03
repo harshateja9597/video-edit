@@ -1,82 +1,58 @@
-name: Build Android App
+name: Android CI/CD
 
 on:
   push:
     branches:
       - main
-      
+  
 
 jobs:
-  build:
-    name: Build and Package Android App
+  build-android:
+    name: Build & Test Android
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout repository
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Set up Java (required for Gradle) - gradel version 8+ requires java 17
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'  # Temurin JDK
-          java-version: '17'  # Recommended for Android builds
-
-      # Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18 # Ensure compatibility with package.json
+          node-version: 18
 
-      # Install dependencies
-      - name: Install Node.js dependencies
-        run: npm install --force
+      - name: Install Dependencies
+        run: npm install
 
-      # giving execute permissions to the file
-      - name: Grant execute permission to Gradle wrapper
+      - name: Setup Java & Android SDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Cache Gradle
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run Jest Tests
+        run: npm test
+
+      - name: giving execute permissions to gradlew
         run: chmod +x android/gradlew
 
-      # Install Android dependencies (Gradle, SDK)
-      - name: Install Gradle Dependencies
-        run: cd android && ./gradlew dependencies
-
-      # Verify All Dependencies Installed
-      - name: Verify Installed Dependencies
-        run: cd android && ./gradlew dependencies --info
-      
-      # run code quality checks (deket for kotlin)
-      - name: run code quality check
-        run: cd android && ./gradlew detekt
-        continue-on-error: true 
-
-      # run linting
-      - name: run android lint
-        run: cd android && ./gradlew lint
-        continue-on-error: true 
-
-      # Build APK
-      - name: Build APK (Release)
+      - name: Build Android APK
         run: |
           cd android
+          chmod +x gradlew
           ./gradlew assembleRelease
 
-      # Upload APK as an artifact
-      - name: Upload APK
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: android-apk
           path: android/app/build/outputs/apk/release/app-release.apk
-
-      # Build AAB (Android App Bundle)
-      - name: Build AAB (Release)
-        run: |
-          cd android
-          ./gradlew bundleRelease
-
-      # Upload AAB as an artifact
-      - name: Upload AAB
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-aab
-          path: android/app/build/outputs/bundle/release/app-release.aab
