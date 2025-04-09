@@ -1,0 +1,13 @@
+name: android workflow 
+on:
+  push:
+    branches: 
+    - main
+jobs:
+  android-build:
+    name: checkout the code, and build the application
+    runs-on: ubuntu-latest
+
+  steps:
+  - name: ckeckout repositary 
+    uses: actions/checkout@v4
