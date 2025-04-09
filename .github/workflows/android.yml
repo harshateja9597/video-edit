@@ -46,7 +46,7 @@ jobs:
         continue-on-error: true
 
       - name: giving execute persissions 
-        run: chmod +x ./gradlew
+        run: chmod +x ./android/gradlew
 
       - name: build the application
         run: |
