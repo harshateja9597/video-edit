@@ -11,3 +11,13 @@ jobs:
     steps:
       - name: checkout repositary 
         uses: actions/checkout@v4
+        
+      # setting up the node js environment with 18 version mentioned in package.json 
+      - name: setup nodejs environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: installing nodejs dependencies
+        run: npm install 
+        
