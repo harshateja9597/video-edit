@@ -19,5 +19,13 @@ jobs:
           node-version: 18
 
       - name: installing nodejs dependencies
-        run: npm install 
+        run: npm install
+        
+      # using lint mentioned in package.json("lint": "eslint .")
+      - name: run lint stage 
+        run: npm run lint
+
+      # using test mentioned in package.json("test":"jest")
+      - name: testing stage 
+        run: npm test
         
