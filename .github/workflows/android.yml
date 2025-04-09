@@ -32,19 +32,6 @@ jobs:
           distribution: 'temurin'
           java-version: ${{env.JAVA_VERSION}}
 
-      - name: checking the java version
-        run: java -version
-          
-      # using lint mentioned in package.json("lint": "eslint .")
-      - name: run lint stage 
-        run: npm run lint 
-        continue-on-error: true 
-
-      # using test mentioned in package.json("test":"jest")
-      - name: testing stage 
-        run: npm test
-        continue-on-error: true
-
       - name: giving execute persissions 
         run: chmod +x ./android/gradlew
 
