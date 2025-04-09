@@ -23,7 +23,8 @@ jobs:
         
       # using lint mentioned in package.json("lint": "eslint .")
       - name: run lint stage 
-        run: npm run lint || true
+        run: npm run lint 
+        continue-on-error: true 
 
       # using test mentioned in package.json("test":"jest")
       - name: testing stage 
