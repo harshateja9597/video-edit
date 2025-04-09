@@ -8,6 +8,6 @@ jobs:
     name: checkout the code, and build the application
     runs-on: ubuntu-latest
 
-  steps:
-  - name: ckeckout repositary 
-    uses: actions/checkout@v4
+    steps:
+      - name: checkout repositary 
+        uses: actions/checkout@v4
