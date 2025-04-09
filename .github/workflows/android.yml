@@ -3,6 +3,10 @@ on:
   push:
     branches: 
     - main
+env:
+  JAVA_VERSION: '17'
+  NODE_VERSION: '18'
+  
 jobs:
   android-build:
     name: checkout the code, and build the application
@@ -16,7 +20,7 @@ jobs:
       - name: setup nodejs environment
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: ${{env.NODE_VERSION}}
 
       - name: installing nodejs dependencies
         run: npm install
@@ -26,7 +30,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: ${{env.JAVA_VERSION}}
 
       - name: checking the java version
         run: java -version
