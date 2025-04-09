@@ -46,12 +46,12 @@ jobs:
         continue-on-error: true
 
       - name: giving execute persissions 
-        run: chmod +x ./android/gradlew
+        run: chmod +x ./gradlew
 
       - name: build the application
         run: |
           cd android
-          ./gradlew assembleDebug
+          ./gradlew build
 
         
         
