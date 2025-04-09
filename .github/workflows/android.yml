@@ -1,0 +1,44 @@
+name: android workflow 
+on:
+  push:
+    branches: 
+    - main
+env:
+  JAVA_VERSION: '17'
+  NODE_VERSION: '18'
+  
+jobs:
+  android-build:
+    name: checkout the code, and build the application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repositary 
+        uses: actions/checkout@v4
+        
+      # setting up the node js environment with 18 version mentioned in package.json 
+      - name: setup nodejs environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{env.NODE_VERSION}}
+
+      - name: installing nodejs dependencies
+        run: npm install
+        
+      #setting up java version 17 based on gradle version mentioned in (gradle-wrapper.properties) 
+      - name: setup java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: ${{env.JAVA_VERSION}}
+
+      - name: giving execute persissions 
+        run: chmod +x ./android/gradlew
+
+      - name: build the application
+        run: |
+          cd android
+          ./gradlew build
+
+        
+        
