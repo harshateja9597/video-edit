@@ -44,7 +44,7 @@ jobs:
         run: |
           echo "${{ secrets.KEYSTORE_FILE_BASE64 }}" | base64 --decode > android/my-upload-key.keystore
 
-      - name: setting up signing envirinment variables
+      - name: setting up signing environment variables
         run: |
           echo "MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore" >> $GITHUB_ENV
           echo "MYAPP_UPLOAD_KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> $GITHUB_ENV
@@ -55,10 +55,7 @@ jobs:
         run: |
           cd android
           ./gradlew bundleRelease
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        
 
 
         
