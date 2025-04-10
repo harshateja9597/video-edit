@@ -35,13 +35,18 @@ jobs:
       - name: giving execute persissions 
         run: chmod +x ./android/gradlew
 
+      - name: checking lint errors
+        run: npm run lint
+
       # this will covert the base 64 encoded to normal file 
       - name: Decode keystore
         run: |
           echo "${{ secrets.KEYSTORE_FILE_BASE64 }}" | base64 --decode > android/my-upload-key.keystore
 
       - name: Build signed AAB
-        run: ./gradlew bundleRelease
+        run: |
+          cd android
+          ./gradlew bundleRelease
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
