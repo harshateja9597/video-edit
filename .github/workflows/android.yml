@@ -54,7 +54,7 @@ jobs:
       - name: Build signed AAB
         run: |
           cd android
-          ./gradlew assembeRelease
+          ./gradlew assembleRelease
 
       - name: verify apk signature 
         run: |
