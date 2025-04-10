@@ -59,6 +59,19 @@ jobs:
       - name: verify apk signature 
         run: |
           $ANDROID_SDK_ROOT/build-tools/34.0.0/apksigner verify --verbose android/app/build/outputs/apk/release/app-release.apk
+
+      - name: Run OWASP Dependency Check
+        uses: dependency-check/Dependency-Check_Action@v3
+        with:
+          project: 'ReactNativeApp'
+          scan: './android'
+          format: 'HTML'
+
+      - name: Display OWASP Summary in Logs
+        run: |
+          echo "🔎 OWASP Dependency Summary:"
+          grep -E "Total Dependencies|Vulnerabilities found" dependency-check-report.html || echo "Couldn't extract summary from HTML"
+
           
       # added this stage because i am using github hosted runners so by default after running the pipeline runner will not be accesible so we need our build right so to get that we are adding this stage 
       - name: upload apk artifact
