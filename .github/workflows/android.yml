@@ -15,6 +15,12 @@ jobs:
     steps:
       - name: checkout repositary 
         uses: actions/checkout@v4
+
+      - name: Scan for Secrets with Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        with:
+          config-path: ""
+          fail: true
         
       # setting up the node js environment with 18 version mentioned in package.json 
       - name: setup nodejs environment
@@ -24,16 +30,8 @@ jobs:
 
       - name: installing nodejs dependencies
         run: npm install
-
-      - name: Snyk JavaScript Dependency Scan
-        uses: snyk/actions/node@master
-        with:
-          command: test
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        continue-on-error: true
-
-      - name: Snyk Android (Gradle) Dependency Scan
+        
+      - name: Snyk Android Dependency Scan
         uses: snyk/actions/gradle@master
         with:
           command: test
