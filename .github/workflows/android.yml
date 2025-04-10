@@ -44,6 +44,13 @@ jobs:
         run: |
           echo "${{ secrets.KEYSTORE_FILE_BASE64 }}" | base64 --decode > android/my-upload-key.keystore
 
+      - name: setting up signing envirinment variables
+        run: |
+          echo "MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore" >> $GITHUB_ENV
+          echo "MYAPP_UPLOAD_KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> $GITHUB_ENV
+          echo "MYAPP_UPLOAD_STORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
+          echo "MYAPP_UPLOAD_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> $GITHUB_ENV
+
       - name: Build signed AAB
         run: |
           cd android
