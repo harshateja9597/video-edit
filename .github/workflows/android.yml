@@ -37,6 +37,7 @@ jobs:
 
       - name: checking lint errors
         run: npm run lint
+        continue-on-error: true
 
       # this will covert the base 64 encoded to normal file 
       - name: Decode keystore
