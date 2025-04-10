@@ -54,14 +54,18 @@ jobs:
       - name: Build signed AAB
         run: |
           cd android
-          ./gradlew bundleRelease
+          ./gradlew assembeRelease
+
+      - name: verify apk signature 
+        run: |
+          $ANDROID_SDK_ROOT/build-tools/34.0.0/apksigner verify --verbose android/app/build/outputs/apk/release/app-release.apk
           
-      # added this stage because i am using github hosted runners so by default after running the pipeline runner will not be accesible so we need our build application right so to get that we are adding this stage 
-      - name: upload aab artifact
+      # added this stage because i am using github hosted runners so by default after running the pipeline runner will not be accesible so we need our build right so to get that we are adding this stage 
+      - name: upload apk artifact
         uses: actions/upload-artifact@v4
         with: 
-          name: release-aab
-          path: android/app/build/outputs/bundle/release/app-release.aab
+          name: release-apk
+          path: android/app/build/outputs/apk/release/app-release.apk
         
 
 
